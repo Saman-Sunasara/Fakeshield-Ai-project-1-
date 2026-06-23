@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+
+# Jupyter
+.ipynb_checkpoints
+
+# Logs
+*.log
+
+# Models & Data
+models/saved_models/*.pth
+models/saved_models/*.bin
+dataset/*.csv
+reports/*.json
