@@ -97,7 +97,7 @@ The model is evaluated using Accuracy, Precision, Recall, F1-Score, and ROC-AUC.
 - **Handling Non-IID Data**: Implementing advanced FL strategies like FedProx to handle severe data imbalance across clients.
 
 ## 👨‍💻 Contributors
-- [Your Name] - Lead AI Developer
+- Saman Sunasara - Lead AI Developer
 
 ## 📝 License
 This project is licensed under the MIT License.
