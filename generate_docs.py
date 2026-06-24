@@ -53,25 +53,30 @@ doc2.add_heading('Labels', level=1)
 doc2.add_paragraph('- 1 (True): Represents authentic, real news articles.\n- 0 (Fake): Represents fabricated or deceptive news articles.')
 
 doc2.add_heading('Sample Dataset Table', level=1)
-table = doc2.add_table(rows=3, cols=3)
-table.style = 'Table Grid'
-hdr_cells = table.rows[0].cells
-hdr_cells[0].text = 'Title'
-hdr_cells[1].text = 'Text Snippet'
-hdr_cells[2].text = 'Label'
-
-row_cells = table.rows[1].cells
-row_cells[0].text = 'Scientists discover new planet'
-row_cells[1].text = 'NASA announced the discovery...'
-row_cells[2].text = 'True (1)'
-
-row_cells = table.rows[2].cells
-row_cells[0].text = 'Aliens land in New York'
-row_cells[1].text = 'Extraterrestrials have arrived...'
-row_cells[2].text = 'Fake (0)'
-
-doc2.add_heading('Dataset Screenshots', level=1)
-doc2.add_paragraph('[Please insert screenshot of the Pandas DataFrame head() output here]')
+import pandas as pd
+try:
+    df_true = pd.read_csv('dataset/True.csv').head(2)
+    df_true['Label'] = 'True (1)'
+    df_fake = pd.read_csv('dataset/Fake.csv').head(2)
+    df_fake['Label'] = 'Fake (0)'
+    df_sample = pd.concat([df_true, df_fake])
+    
+    table = doc2.add_table(rows=1, cols=4)
+    table.style = 'Table Grid'
+    hdr_cells = table.rows[0].cells
+    hdr_cells[0].text = 'Title'
+    hdr_cells[1].text = 'Text Snippet'
+    hdr_cells[2].text = 'Subject'
+    hdr_cells[3].text = 'Label'
+    
+    for _, row in df_sample.iterrows():
+        row_cells = table.add_row().cells
+        row_cells[0].text = str(row['title'])[:50] + '...'
+        row_cells[1].text = str(row['text'])[:50] + '...'
+        row_cells[2].text = str(row['subject'])
+        row_cells[3].text = str(row['Label'])
+except Exception as e:
+    doc2.add_paragraph("Error loading dataset for table.")
 
 doc2.save('reports/phase1/Dataset_Information.docx')
 
