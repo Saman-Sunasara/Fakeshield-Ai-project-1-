@@ -33,6 +33,8 @@ def evaluate(model, test_loader, device):
             all_labels.extend(labels.cpu().numpy())
             all_probs.extend(probs)
             
+    if len(test_loader) == 0:
+        return 0.0, {"accuracy": 0.0, "precision": 0.0, "recall": 0.0, "f1": 0.0}
     avg_loss = total_loss / len(test_loader)
     
     acc = accuracy_score(all_labels, all_preds)

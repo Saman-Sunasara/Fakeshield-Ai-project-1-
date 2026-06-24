@@ -23,7 +23,7 @@ class FakeNewsDataset(Dataset):
         text = str(self.texts[item])
         label = self.labels[item]
 
-        encoding = self.tokenizer.encode_plus(
+        encoding = self.tokenizer(
             text,
             add_special_tokens=True,
             max_length=self.max_len,
@@ -61,16 +61,10 @@ def load_data(data_dir='dataset'):
     else:
         logger.warning("Dataset not found! Creating dummy data for testing purposes.")
         os.makedirs(data_dir, exist_ok=True)
-        # Create dummy data
+        # Create dummy data with unique strings so they aren't dropped as duplicates
         dummy_data = {
-            'text': [
-                "The earth is flat and scientists are hiding it.", 
-                "A new vaccine has been approved by the FDA.",
-                "Aliens landed in New York yesterday.",
-                "The stock market saw a significant rise today.",
-                "Drinking bleach cures all diseases."
-            ] * 200, # 1000 samples
-            'label': [0, 1, 0, 1, 0] * 200
+            'text': [f"This is dummy text number {i} for testing the FakeShield AI project." for i in range(1000)],
+            'label': [i % 2 for i in range(1000)]
         }
         df = pd.DataFrame(dummy_data)
         df = preprocess_dataframe(df, text_col='text')
